@@ -1,0 +1,10 @@
+torch
+torchvision
+torchxrayvision
+pymongo
+pillow
+numpy
+matplotlib
+scikit-learn
+tqdm
+kaggle  
