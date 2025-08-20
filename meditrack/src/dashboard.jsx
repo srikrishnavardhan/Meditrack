@@ -164,8 +164,8 @@ function Dashboard() {
                 <h4>AKHIL </h4>
                 <p>Gender: Male</p>
                 <p>Age: 18 years</p>
-                <p>Height: 178 cm</p>
-                <p>Weight: 62 kg</p>
+                <p>Height: 170 cm</p>
+                <p>Weight: 60 kg</p>
                 <button>Show all information</button>
             </div>
         </div>
