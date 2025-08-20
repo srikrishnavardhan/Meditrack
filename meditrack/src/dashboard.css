@@ -11,16 +11,16 @@
 }
 
 /* Body */
-body {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-}
+
 
 /* Dashboard */
 .dashboard {
     display: flex;
     width: 100%;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 /* Sidebar */
@@ -80,9 +80,7 @@ body {
     transition: transform 0.3s ease; /* Icon animation */
 }
 
-.nav-menu a:hover img {
-    transform: rotate(360deg); /* Rotate icon on hover */
-}
+
 
 /* Main Content Area */
 .main-content {

@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meditrack - Revolutionizing Healthcare</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="header">
-        <img src="logo.png" alt="Meditrack Logo" class="logo">
-        <div class="buttons">
+import './landing.css'
+function Landing(){
+    return(
+        <div>
+        <div className="header">
+        <img src="logo.png" alt="Meditrack Logo" className="logo"/>
+        <div className="buttons">
             <button onclick="window.location.href='../Login page/login.html'">Login</button>
             <button onclick="window.location.href='../Sign up page/signup.html'">Sign Up</button>
         </div>
     </div>
     
-    <div class="content">
+    <div className="content">
         <h1>Meditrack: Revolutionizing Healthcare through Innovative EHR Solutions</h1>
         <p>At Meditrack, we're dedicated to transforming the healthcare landscape with our cutting-edge Electronic Health Record (EHR) system. Our journey began with a simple yet profound mission: to harness the power of technology to enhance patient care, streamline clinical workflows, and foster a more interconnected healthcare ecosystem.</p>
         
@@ -27,10 +22,12 @@
         <p>Our team is dedicated to developing a user-friendly Electronic Health Record (EHR) system. With a shared vision and diverse skills, we are committed to creating an innovative solution that ensures both security and ease of use in healthcare management.</p>
         
     </div>
-    <div class="endbar">
+    <div className="endbar">
         <h3>Join Our Journey Towards a Healthier Tomorrow</h3>
         <p>Explore how Meditrack can support your healthcare organization in achieving excellence. Discover the difference our innovative EHR solutions can make.</p>
         <p>Contact us: Meditrack@gmail.com</p>
     </div>
-</body>
-</html>
+    </div>
+    )
+}
+export default Landing;
