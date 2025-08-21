@@ -1,12 +1,15 @@
 import './landing.css'
+import { useNavigate } from "react-router-dom";
+
 function Landing(){
+    const navigate = useNavigate();
     return(
         <div>
         <div className="header">
         <img src="logo.png" alt="Meditrack Logo" className="logo"/>
         <div className="buttons">
-            <button onclick="window.location.href='../Login page/login.html'">Login</button>
-            <button onclick="window.location.href='../Sign up page/signup.html'">Sign Up</button>
+        <button onClick={() => navigate("/login")}>Login</button>
+        <button onClick={() => navigate("/Signup")}>Sign Up</button>
         </div>
     </div>
     

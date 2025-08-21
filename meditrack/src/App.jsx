@@ -2,8 +2,7 @@ import Dashboard from "./dashboard";
 import Landing from "./landing";
 import Login from "./login";
 import Signup from "./signup";
-import {
-  BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
   
 
 function App(){
