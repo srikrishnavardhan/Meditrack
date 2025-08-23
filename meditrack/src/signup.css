@@ -1,0 +1,85 @@
+/* Full container */
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+}
+
+/* Left Panel */
+.classleft-panel {
+  flex: 1;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.classleft-panel .logo {
+  font-size: 64px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Right Panel */
+.right-panel {
+  flex: 1;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-panel h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Form */
+#signupForm {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+#signupForm input {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Captcha row */
+.captcha-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.captcha-container label {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* Button */
+#signupForm button {
+  background-color: #ccc;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+#signupForm button:hover {
+  background-color: #aaa;
+}
