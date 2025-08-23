@@ -1,36 +1,61 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"; 
 import './signup.css';
 
 function Signup() {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [captchaInput, setCaptchaInput] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [aadhaar, setAadhaar] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     generateCaptcha();
   }, []);
 
-  // function to generate random numbers
   const generateCaptcha = () => {
     setNum1(Math.floor(Math.random() * 10) + 1);
     setNum2(Math.floor(Math.random() * 10) + 1);
     setCaptchaInput("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const correctAnswer = num1 + num2;
-
-    if (parseInt(captchaInput, 10) !== correctAnswer) {
-      alert("Captcha incorrect! Please try again.");
-      generateCaptcha(); // refresh captcha
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
       return;
     }
 
-    // ✅ If captcha is correct, continue with signup
-    alert("Signup successful!");
-    // here you can add your API call / DB logic
+    const correctAnswer = num1 + num2;
+    if (parseInt(captchaInput, 10) !== correctAnswer) {
+      alert("Captcha incorrect! Please try again.");
+      generateCaptcha();
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:4000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ aadhaar, password }), 
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Signup failed");
+        return;
+      }
+
+      alert("Signup successful!");
+      navigate("/login");
+    } catch (err) {
+      console.error("Signup error:", err);
+      alert("Error: " + err.message);
+    }
   };
 
   return (
@@ -41,9 +66,29 @@ function Signup() {
       <div className="right-panel">
         <h2>Sign Up Here</h2>
         <form id="signupForm" onSubmit={handleSubmit}>
-          <input type="text" placeholder="Enter your Aadhaar" id="uid" required />
-          <input type="password" placeholder="Enter password" id="password" required />
-          <input type="password" placeholder="Re-Enter Password" id="re-enter-password" required />
+          <input 
+            type="text" 
+            placeholder="Enter your Aadhaar " 
+            value={aadhaar}
+            onChange={(e) => setAadhaar(e.target.value)}
+            required 
+          />
+          
+          <input 
+            type="password" 
+            placeholder="Enter password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required 
+          />
+          
+          <input 
+            type="password" 
+            placeholder="Re-Enter Password" 
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required 
+          />
           
           <div className="captcha-container">
             <label htmlFor="captchaAnswer">{num1} + {num2} ?</label>
@@ -56,8 +101,10 @@ function Signup() {
               required 
             />
           </div>
-
-          <button type="submit">Sign Up</button>
+          
+          <div className="buttons">
+            <button type="submit">Sign Up</button>
+          </div>
         </form>
       </div>
     </div>
