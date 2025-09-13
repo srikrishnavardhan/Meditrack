@@ -1,5 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
     margin: 0;
     padding: 0;
@@ -7,101 +10,231 @@
 }
 
 html, body {
-    height: 100%;
     font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #181818 0%, #181818 100%);
+    color: #fff;
+    min-height: 100vh;
+    scroll-behavior: smooth;
 }
 
+/* Container */
 .container {
+    max-width: none;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
     display: flex;
-    height: 100vh; 
+    min-height: 100vh;
 }
 
+/* Left Panel */
 .left-panel {
     flex: 1;
-    background-color: black;
+    background-color: #000;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    padding-left: 0;
+    min-width: 0;
 }
 
 .left-panel .logo {
-    max-width: 100%;
+    width: 420px;
+    max-width: 420px;
+    min-width: 120px;
     height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 32px #00ff8855);
+    animation: logoPop 1.2s cubic-bezier(.77,0,.18,1) 0.5s both;
 }
 
+@keyframes logoPop {
+    0% { transform: scale(0.7) translateY(-40px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Right Panel */
 .right-panel {
     flex: 1;
-    background-color: #f0f0f0;
+    background: rgba(24, 24, 24, 0.92);
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
+    border-radius: 0 24px 24px 0;
+    box-shadow: none;
+    padding: 0;
+    min-height: 100vh;
+    animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1) 1.2s both;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
 }
 
 .right-panel h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-family: 'Outfit';
+    margin-bottom: 25px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+    animation: fadeInDown 1.2s cubic-bezier(.77,0,.18,1) 1.3s both;
 }
 
-#signupForm {
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-40px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+#loginForm {
+    width: 340px;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 400px;
+    gap: 0;
 }
 
-#signupForm input[type="text"],
-#signupForm input[type="password"],
-#signupForm input[type="Re-Enter password"],
-#signupForm input[type="submit"] {
-    padding: 10px;
+#loginForm input {
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: 'Outfit';
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    background: #232526;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s, color 0.2s;
+}
+
+#loginForm input:focus {
+    background: #181818;
+    color: #00ff88;
 }
 
 .captcha-container {
     display: flex;
     align-items: center;
-    gap: 10px;
     margin-bottom: 15px;
 }
 
-#captchaQuestion {
-    font-size: 16px;
+.captcha-container label {
+    margin-right: 10px;
+    font-size: 1rem;
+    color: #fff;
+    white-space: nowrap;
+    font-family: 'Outfit', sans-serif;
 }
 
+#loginForm button,
 button[type="submit"] {
-    padding: 10px;
-    background-color: #ccc;
-    color: #666;
+    background: linear-gradient(90deg, #00ff88 0%, #00c37a 100%);
+    color: #181818;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
     cursor: pointer;
+    transition: 
+        background 0.3s cubic-bezier(.77,0,.18,1),
+        color 0.3s cubic-bezier(.77,0,.18,1),
+        transform 0.2s cubic-bezier(.77,0,.18,1);
+    outline: none;
+    width: 100%;
+    margin-top: 10px;
+    animation: fadeInUp 1.2s cubic-bezier(.77,0,.18,1) 1.4s both;
 }
 
-button[type="submit"]:hover {
-    background-color: #000000;
-    color: #ccc;
+#loginForm button:hover,
+button[type="submit"]:hover,
+#loginForm button:focus,
+button[type="submit"]:focus {
+    background: linear-gradient(90deg, #00c37a 0%, #00ff88 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
 }
 
-@media (max-width: 768px) {
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+/* Messages */
+.login-success-msg {
+    margin-top: 10px;
+    background: #000;
+    color: #00ff88;
+    border: 1.5px solid #00ff88;
+    border-radius: 6px;
+    padding: 6px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeIn 0.5s;
+}
+
+.login-error-msg {
+    margin-top: 10px;
+    background: #000;
+    color: #ff3b3b;
+    border: 1.5px solid #ff3b3b;
+    border-radius: 6px;
+    padding: 6px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeIn 0.5s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
     .container {
         flex-direction: column;
+        padding: 0;
+        width: 100vw;
     }
-    
-    .left-panel, .right-panel {
-        flex: none;
-        width: 100%;
-        height: 50vh;
+    .left-panel {
+        justify-content: center;
+        border-radius: 24px 24px 0 0;
+        min-height: 180px;
+        padding: 32px 0 0 0;
     }
-    
+    .right-panel {
+        border-radius: 0 0 24px 24px;
+        min-height: unset;
+        padding: 32px 0;
+    }
     #loginForm {
-        width: 90%;
+        width: 98%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 100vw;
+        padding: 0;
+    }
+    .left-panel {
+        padding-left: 0;
+    }
+    .left-panel .logo {
+        max-width: 120px;
+        width: 60vw;
+    }
+    .right-panel h2 {
+        font-size: 1.2rem;
+    }
+    #loginForm {
+        width: 99%;
     }
 }

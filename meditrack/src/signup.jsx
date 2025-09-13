@@ -9,6 +9,8 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [aadhaar, setAadhaar] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,15 +25,17 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccessMsg("");
+    setErrorMsg("");
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setErrorMsg("Passwords do not match!");
       return;
     }
 
     const correctAnswer = num1 + num2;
     if (parseInt(captchaInput, 10) !== correctAnswer) {
-      alert("Captcha incorrect! Please try again.");
+      setErrorMsg("Captcha incorrect! Please try again.");
       generateCaptcha();
       return;
     }
@@ -46,29 +50,31 @@ function Signup() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Signup failed");
+        setErrorMsg(data.message || "Signup failed");
         return;
       }
 
-      alert("Signup successful!");
-      navigate("/login");
+      setSuccessMsg("Signup successful!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
       console.error("Signup error:", err);
-      alert("Error: " + err.message);
+      setErrorMsg("Error: " + err.message);
     }
   };
 
   return (
     <div className="container">
       <div className="classleft-panel">
-        <h1 className="logo">Emedic</h1>
+        <img src="/logo.png" alt="Meditrack Logo" className="logo" />
       </div>
       <div className="right-panel">
         <h2>Sign Up Here</h2>
         <form id="signupForm" onSubmit={handleSubmit}>
           <input 
             type="text" 
-            placeholder="Enter your Aadhaar " 
+            placeholder="Enter your Aadhaar" 
             value={aadhaar}
             onChange={(e) => setAadhaar(e.target.value)}
             required 
@@ -106,6 +112,12 @@ function Signup() {
             <button type="submit">Sign Up</button>
           </div>
         </form>
+        {successMsg && (
+          <div className="signup-success-msg">{successMsg}</div>
+        )}
+        {errorMsg && (
+          <div className="signup-error-msg">{errorMsg}</div>
+        )}
       </div>
     </div>
   );

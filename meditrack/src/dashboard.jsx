@@ -160,7 +160,7 @@ function Dashboard() {
             </main>
 
             <div className="profile">
-                <img src="/Solo.jpg" alt="Profile Picture" className="profile-picture" />
+                
                 <h4>AKHIL </h4>
                 <p>Gender: Male</p>
                 <p>Age: 18 years</p>

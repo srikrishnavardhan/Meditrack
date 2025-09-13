@@ -8,6 +8,8 @@ function Login() {
   const [captchaInput, setCaptchaInput] = useState("");
   const [aadhaar, setAadhaar] = useState("");   
   const [password, setPassword] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +24,12 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccessMsg("");
+    setErrorMsg("");
 
     const correctAnswer = num1 + num2;
     if (parseInt(captchaInput, 10) !== correctAnswer) {
-      alert("Captcha incorrect! Please try again.");
+      setErrorMsg("Captcha incorrect! Please try again.");
       generateCaptcha(); 
       return;
     }
@@ -39,14 +43,16 @@ function Login() {
 
       const data = await res.json();
       if (!res.ok) {
-        alert(data.message || "Login failed!");
+        setErrorMsg(data.message || "Login failed!");
         return;
       }
 
-      alert("Login successful!");
-      navigate("/dashboard");   
+      setSuccessMsg("Login successful!");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1200);
     } catch (err) {
-      alert("Error: " + err.message);
+      setErrorMsg("Error: " + err.message);
     }
   };
 
@@ -89,6 +95,12 @@ function Login() {
           <div className="button">
             <button type="submit">Login</button>
           </div>
+          {successMsg && (
+            <div className="login-success-msg">{successMsg}</div>
+          )}
+          {errorMsg && (
+            <div className="login-error-msg">{errorMsg}</div>
+          )}
         </form>
       </div>
     </div>
