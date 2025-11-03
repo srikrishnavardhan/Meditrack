@@ -1,7 +1,5 @@
+@import './theme.css';
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 * {
     margin: 0;
@@ -11,8 +9,8 @@
 
 html, body {
     font-family: 'Outfit', sans-serif;
-    background: linear-gradient(135deg, #181818 0%, #181818 100%);
-    color: #fff;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    color: var(--text-primary);
     min-height: 100vh;
     scroll-behavior: smooth;
 }
@@ -30,7 +28,7 @@ html, body {
 /* Left Panel */
 .left-panel {
     flex: 1;
-    background-color: #000;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, rgba(0, 0, 0, 0.8) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,7 +42,7 @@ html, body {
     min-width: 120px;
     height: auto;
     display: block;
-    filter: drop-shadow(0 8px 32px #00ff8855);
+    filter: drop-shadow(0 8px 32px rgba(0, 217, 163, 0.4));
     animation: logoPop 1.2s cubic-bezier(.77,0,.18,1) 0.5s both;
 }
 
@@ -56,13 +54,13 @@ html, body {
 /* Right Panel */
 .right-panel {
     flex: 1;
-    background: rgba(24, 24, 24, 0.92);
+    background: var(--card-bg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 0 24px 24px 0;
-    box-shadow: none;
+    box-shadow: 0 8px 32px rgba(0, 217, 163, 0.1);
     padding: 0;
     min-height: 100vh;
     animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1) 1.2s both;
@@ -77,7 +75,7 @@ html, body {
     margin-bottom: 25px;
     font-size: 2rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--accent-green);
     font-family: 'Outfit', sans-serif;
     letter-spacing: 0.5px;
     animation: fadeInDown 1.2s cubic-bezier(.77,0,.18,1) 1.3s both;
@@ -98,19 +96,20 @@ html, body {
 #loginForm input {
     margin-bottom: 15px;
     padding: 14px;
-    border: none;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     outline: none;
     font-size: 1rem;
-    background: #232526;
-    color: #fff;
+    background: var(--primary-dark);
+    color: var(--text-primary);
     font-family: 'Outfit', sans-serif;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.3s ease;
 }
 
 #loginForm input:focus {
-    background: #181818;
-    color: #00ff88;
+    background: var(--card-bg);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(0, 217, 163, 0.1);
 }
 
 .captcha-container {
@@ -122,15 +121,15 @@ html, body {
 .captcha-container label {
     margin-right: 10px;
     font-size: 1rem;
-    color: #fff;
+    color: var(--text-primary);
     white-space: nowrap;
     font-family: 'Outfit', sans-serif;
 }
 
 #loginForm button,
 button[type="submit"] {
-    background: linear-gradient(90deg, #00ff88 0%, #00c37a 100%);
-    color: #181818;
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00b88d 100%);
+    color: var(--primary-dark);
     border: none;
     padding: 14px;
     border-radius: 8px;
@@ -138,10 +137,11 @@ button[type="submit"] {
     font-family: 'Outfit', sans-serif;
     font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 217, 163, 0.3);
     transition: 
         background 0.3s cubic-bezier(.77,0,.18,1),
-        color 0.3s cubic-bezier(.77,0,.18,1),
-        transform 0.2s cubic-bezier(.77,0,.18,1);
+        transform 0.2s cubic-bezier(.77,0,.18,1),
+        box-shadow 0.3s ease;
     outline: none;
     width: 100%;
     margin-top: 10px;
@@ -152,9 +152,9 @@ button[type="submit"] {
 button[type="submit"]:hover,
 #loginForm button:focus,
 button[type="submit"]:focus {
-    background: linear-gradient(90deg, #00c37a 0%, #00ff88 100%);
-    color: #fff;
-    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(135deg, #00b88d 0%, var(--accent-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 217, 163, 0.4);
 }
 
 @keyframes fadeInUp {
@@ -165,11 +165,11 @@ button[type="submit"]:focus {
 /* Messages */
 .login-success-msg {
     margin-top: 10px;
-    background: #000;
-    color: #00ff88;
-    border: 1.5px solid #00ff88;
-    border-radius: 6px;
-    padding: 6px 0;
+    background: rgba(0, 217, 163, 0.1);
+    color: var(--accent-green);
+    border: 2px solid var(--accent-green);
+    border-radius: 8px;
+    padding: 10px;
     text-align: center;
     font-weight: 600;
     font-size: 0.95rem;
@@ -181,11 +181,11 @@ button[type="submit"]:focus {
 
 .login-error-msg {
     margin-top: 10px;
-    background: #000;
-    color: #ff3b3b;
-    border: 1.5px solid #ff3b3b;
-    border-radius: 6px;
-    padding: 6px 0;
+    background: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+    border: 2px solid #f44336;
+    border-radius: 8px;
+    padding: 10px;
     text-align: center;
     font-weight: 600;
     font-size: 0.95rem;

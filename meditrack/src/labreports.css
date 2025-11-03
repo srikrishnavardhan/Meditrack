@@ -1,0 +1,389 @@
+@import './theme.css';
+
+.page-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-header h1 {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.back-button {
+    background: var(--accent-green);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: var(--accent-green-hover);
+    transform: translateX(-5px);
+}
+
+.content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+.filter-btn.active {
+    background: var(--accent-green);
+    color: var(--text-primary);
+    border-color: var(--accent-green);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h3 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.status-badge.completed {
+    background: rgba(0, 217, 163, 0.2);
+    color: var(--accent-green);
+}
+
+.status-badge.pending {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.status-badge.upcoming {
+    background: rgba(74, 144, 226, 0.2);
+    color: var(--accent-blue);
+}
+
+.card-body {
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.info-row .value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.card-actions button {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--accent-green);
+    color: var(--text-primary);
+}
+
+.btn-primary:hover {
+    background: var(--accent-green-hover);
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--accent-blue-hover);
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.report-card-full {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.report-card-full:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 217, 163, 0.2);
+    border-color: var(--accent-green);
+}
+
+.report-type {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.result-row {
+    background: rgba(0, 217, 163, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+.result-value {
+    color: var(--accent-green);
+    font-weight: 700;
+}
+
+.btn-share {
+    background: rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+    border: 2px solid #2196f3;
+}
+
+.btn-share:hover {
+    background: #2196f3;
+    color: white;
+}
+
+.booking-form {
+    background: var(--card-bg);
+    border: 2px solid var(--accent-green);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.booking-form h3 {
+    color: var(--accent-green);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--primary-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300d9a3' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.form-group select option {
+    background: var(--primary-dark);
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(0, 217, 163, 0.1);
+    background: var(--card-bg);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-actions .btn-primary {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00b88d 100%);
+    color: var(--primary-dark);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 217, 163, 0.3);
+}
+
+.form-actions .btn-primary:hover {
+    background: linear-gradient(135deg, #00b88d 0%, var(--accent-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 217, 163, 0.4);
+}
+
+.form-actions .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.form-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+.btn-create {
+    width: 100%;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00b88d 100%);
+    color: var(--primary-dark);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 217, 163, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.btn-create:hover {
+    background: linear-gradient(135deg, #00b88d 0%, var(--accent-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 217, 163, 0.4);
+}
+
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-form {
+        padding: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
