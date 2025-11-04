@@ -22,7 +22,7 @@ function Appointments() {
             return JSON.parse(savedAppointments);
         }
         return [
-            { id: 1, name: 'John Doe', date: 'Jan 25, 2024', time: '10:00 AM', status: 'Confirmed', type: 'General Checkup' },
+            { id: 1, name: 'John ', date: 'Jan 25, 2024', time: '10:00 AM', status: 'Confirmed', type: 'General Checkup' },
             { id: 2, name: 'Jane Smith', date: 'Jan 25, 2024', time: '11:30 AM', status: 'Pending', type: 'Follow-up' },
             { id: 3, name: 'Michael Johnson', date: 'Jan 26, 2024', time: '09:00 AM', status: 'Confirmed', type: 'Lab Results Review' },
             { id: 4, name: 'Emily Brown', date: 'Jan 26, 2024', time: '02:00 PM', status: 'Cancelled', type: 'Consultation' },
