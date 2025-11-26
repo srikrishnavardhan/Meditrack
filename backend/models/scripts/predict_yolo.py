@@ -118,7 +118,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description='YOLOv8 Bone Fracture Detection (JSON output)')
-    parser.add_argument('image_path', type='str', help='Path to the X-ray image')
+    parser.add_argument('image_path', type=str, help='Path to the X-ray image')
     parser.add_argument('--model', type=str, default='./runs/detect/bone_fracture_yolov8m/weights/best.pt',
                         help='Path to the trained YOLOv8 model')
     
