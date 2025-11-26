@@ -2,3 +2,9 @@ node_modules
 Data
 pretrained_models
 venv
+index.js
+Human Bone Fractures Multi-modal Image Dataset (HBFMID)
+*.pt
+runs/
+yolo11n.pt
+yolov8m.pt

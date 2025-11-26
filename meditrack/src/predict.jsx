@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './predict.css';
 
@@ -8,6 +8,8 @@ function Predict() {
     const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const canvasRef = useRef(null);
+    const imageRef = useRef(null);
     const navigate = useNavigate();
 
     const handleFileSelect = (e) => {
@@ -38,6 +40,81 @@ function Predict() {
             setError('');
         }
     };
+
+    // Draw bounding boxes on canvas
+    useEffect(() => {
+        if (prediction && prediction.detections && prediction.detections.length > 0 && canvasRef.current && imageRef.current) {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            const img = imageRef.current;
+
+            // Wait for image to load
+            if (!img.complete) {
+                img.onload = () => drawBoundingBoxes();
+            } else {
+                drawBoundingBoxes();
+            }
+
+            function drawBoundingBoxes() {
+                // Set canvas size to match image display size
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Calculate scale factors
+                const scaleX = img.width / prediction.image_shape.width;
+                const scaleY = img.height / prediction.image_shape.height;
+
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw each detection
+                prediction.detections.forEach((detection, index) => {
+                    const { bbox, class: className, confidence } = detection;
+
+                    // Scale bounding box coordinates
+                    const x1 = bbox.x1 * scaleX;
+                    const y1 = bbox.y1 * scaleY;
+                    const x2 = bbox.x2 * scaleX;
+                    const y2 = bbox.y2 * scaleY;
+                    const width = x2 - x1;
+                    const height = y2 - y1;
+
+                    // Color based on class
+                    const colors = {
+                        'Healthy': '#10b981',
+                        'Linear': '#f59e0b',
+                        'Transverse': '#ef4444',
+                        'Oblique': '#ef4444',
+                        'Spiral': '#dc2626',
+                        'Comminuted': '#dc2626',
+                        'Greenstick': '#f59e0b',
+                        'Segmental': '#dc2626',
+                        'Transverse Displaced': '#b91c1c',
+                        'Oblique Displaced': '#b91c1c'
+                    };
+                    const color = colors[className] || '#6366f1';
+
+                    // Draw bounding box
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(x1, y1, width, height);
+
+                    // Draw label background
+                    const label = `${className} ${confidence.toFixed(1)}%`;
+                    ctx.font = 'bold 14px Inter, sans-serif';
+                    const textWidth = ctx.measureText(label).width;
+                    const textHeight = 20;
+
+                    ctx.fillStyle = color;
+                    ctx.fillRect(x1, y1 - textHeight - 4, textWidth + 10, textHeight + 4);
+
+                    // Draw label text
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText(label, x1 + 5, y1 - 8);
+                });
+            }
+        }
+    }, [prediction]);
 
     const handlePredict = async () => {
         if (!selectedFile) {
@@ -126,7 +203,25 @@ function Predict() {
                                 </div>
                             ) : (
                                 <div className="preview-section">
-                                    <img src={previewUrl} alt="Preview" className="preview-image" />
+                                    <div className="image-container" style={{ position: 'relative', display: 'inline-block' }}>
+                                        <img 
+                                            ref={imageRef}
+                                            src={previewUrl} 
+                                            alt="Preview" 
+                                            className="preview-image"
+                                            style={{ display: 'block', maxWidth: '100%' }}
+                                        />
+                                        <canvas 
+                                            ref={canvasRef}
+                                            style={{ 
+                                                position: 'absolute', 
+                                                top: 0, 
+                                                left: 0, 
+                                                pointerEvents: 'none',
+                                                maxWidth: '100%'
+                                            }}
+                                        />
+                                    </div>
                                     <button className="btn-reset" onClick={handleReset}>
                                         Upload Different Image
                                     </button>
@@ -183,6 +278,11 @@ function Predict() {
                                         <p className="badge-value">
                                             {prediction.prediction === 'fractured' ? 'Fracture Detected' : 'No Fracture Detected'}
                                         </p>
+                                        {prediction.primary_class && prediction.primary_class !== 'Healthy' && (
+                                            <p className="badge-subtext" style={{ fontSize: '0.875rem', marginTop: '4px', opacity: 0.9 }}>
+                                                Type: {prediction.primary_class}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
 
@@ -199,31 +299,64 @@ function Predict() {
                                     </div>
                                 </div>
 
-                                <div className="probabilities-section">
-                                    <h3 className="probabilities-title">Detailed Probabilities</h3>
-                                    {Object.entries(prediction.probabilities).map(([label, prob]) => (
-                                        <div key={label} className="probability-item">
-                                            <div className="probability-header">
-                                                <span className="probability-label">
-                                                    {label === 'fractured' ? 'Fractured' : 'Not Fractured'}
-                                                </span>
-                                                <span className="probability-value">{prob.toFixed(1)}%</span>
+                                {prediction.detections && prediction.detections.length > 0 && (
+                                    <div className="detections-section">
+                                        <h3 className="probabilities-title">
+                                            Detected Regions ({prediction.num_detections})
+                                        </h3>
+                                        {prediction.detections.map((detection, index) => (
+                                            <div key={index} className="probability-item">
+                                                <div className="probability-header">
+                                                    <span className="probability-label">
+                                                        {detection.class}
+                                                    </span>
+                                                    <span className="probability-value">
+                                                        {detection.confidence.toFixed(1)}%
+                                                    </span>
+                                                </div>
+                                                <div className="probability-bar">
+                                                    <div 
+                                                        className="probability-fill"
+                                                        style={{ width: `${detection.confidence}%` }}
+                                                    ></div>
+                                                </div>
                                             </div>
-                                            <div className="probability-bar">
-                                                <div 
-                                                    className="probability-fill"
-                                                    style={{ width: `${prob}%` }}
-                                                ></div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {prediction.class_summary && Object.keys(prediction.class_summary).length > 0 && (
+                                    <div className="probabilities-section">
+                                        <h3 className="probabilities-title">Classification Summary</h3>
+                                        {Object.entries(prediction.class_summary).map(([className, count]) => (
+                                            <div key={className} className="probability-item">
+                                                <div className="probability-header">
+                                                    <span className="probability-label">
+                                                        {className}
+                                                    </span>
+                                                    <span className="probability-value">
+                                                        {count} detection{count > 1 ? 's' : ''}
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {prediction.note && (
+                                    <div className="disclaimer" style={{ backgroundColor: '#fef3c7', borderLeft: '4px solid #f59e0b' }}>
+                                        <svg className="disclaimer-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                        </svg>
+                                        <p style={{ color: '#92400e' }}>{prediction.note}</p>
+                                    </div>
+                                )}
 
                                 <div className="disclaimer">
                                     <svg className="disclaimer-icon" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                                     </svg>
-                                    <p>This AI analysis is for informational purposes only and should not replace professional medical diagnosis.</p>
+                                    <p>This AI analysis is powered by YOLOv8 and is for informational purposes only. It should not replace professional medical diagnosis.</p>
                                 </div>
                             </div>
                         ) : (
